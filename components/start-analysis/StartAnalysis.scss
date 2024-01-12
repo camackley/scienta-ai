@@ -1,9 +1,7 @@
-
 @import '../../assets/sass/custom-bootstrap.scss';
 
 .start-report {
   padding: 16px;
-  width: 70%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -18,16 +16,16 @@
   background-position: top, bottom, right, left;
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-color: rgba(203, 217, 246, 0.2);
+  color: $primary;
   
   &--text {
     font-size: 28px;
     line-height: 36px;
-    color: $primary;
   }
   
   &--icon {
     font-size: 24px;
-    line-height: 32px;
+    line-height: 24px;
   }
 }
 

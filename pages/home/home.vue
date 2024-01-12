@@ -1,10 +1,12 @@
 <template>
-  <span class="home">
+  <div class="home">
     <nav-bar />
-    <span class="body">
-      <start-report/>
-    </span>
-  </span>
+    <div class="body">
+      <start-analysis/>
+      <analysis-list />
+    </div>
+    <simple-footer />
+  </div>
 </template>
 
 <router>

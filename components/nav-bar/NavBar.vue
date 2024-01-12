@@ -1,11 +1,13 @@
 <template>
   <div class="navbar">
-    <img
-      src="~/assets/img/brand/icon.webp"
-      alt=""
-      srcset=""
-      class="navbar--brand"
-    />
+    <a href="/">
+      <img
+        src="~/assets/img/brand/icon.webp"
+        alt=""
+        srcset=""
+        class="navbar--brand"
+      />
+    </a>
 
     <img
       src="https://picsum.photos/48"
