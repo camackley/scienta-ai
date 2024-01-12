@@ -15,10 +15,11 @@ export default {
   },
   css: [
     "bootstrap/dist/css/bootstrap.css",
+    "bootstrap-icons/font/bootstrap-icons.css",
     "~/assets/sass/custom-bootstrap.scss",
   ],
   plugins: [],
-  components: true,
+  components: false,
   buildModules: ["@nuxt/typescript-build", "@nuxtjs/router-extras"],
   modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios"],
   axios: {
