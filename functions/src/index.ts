@@ -1,5 +1,12 @@
+import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
-import analysisFn from "./functions/analysis";
+import AnalysisFn from "./functions/Analysis";
+import FileFn from "./functions/File";
 
-export const analysis = functions.https.onRequest(analysisFn);
+// Init conf
+admin.initializeApp();
+
+// Init routes
+export const analysis = functions.https.onRequest(AnalysisFn);
+export const file = functions.https.onRequest(FileFn);
