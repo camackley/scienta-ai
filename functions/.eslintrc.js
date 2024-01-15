@@ -23,5 +23,8 @@ module.exports = {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
     "indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"],
+    "prefer-promise-reject-errors": "off",
+    "require-jsdoc": "off",
   },
 };

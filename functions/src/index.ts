@@ -1,5 +1,18 @@
+import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
-import analysisFn from "./functions/analysis";
+import AnalysisFn from "./functions/analysis";
+import FileFn from "./functions/file";
 
-export const analysis = functions.https.onRequest(analysisFn);
+// Init conf
+admin.initializeApp();
+
+// Init routes
+export const analysis = functions
+  .runWith({
+    timeoutSeconds: 300,
+    memory: "1GB",
+  })
+  .https.onRequest(AnalysisFn);
+
+export const file = functions.https.onRequest(FileFn);
