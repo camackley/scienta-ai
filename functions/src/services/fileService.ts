@@ -1,38 +1,9 @@
 import * as fs from "fs";
-import * as path from "path";
 import * as admin from "firebase-admin";
-import * as markdownpdf from "markdown-pdf";
 
 import { IResultFile, ISaveFile } from "../models/file";
 
 class FileService {
-  async createPDFromMarkdown(
-    fileName: string,
-    content: string
-  ): Promise<string> {
-    const mdFilePath = `src/temp/${fileName}.md`;
-    const pdfFilePath = `src/temp/${fileName}.pdf`;
-
-    const dirPath = path.dirname(mdFilePath);
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-
-    fs.writeFileSync(mdFilePath, content);
-
-    return new Promise((resolve, reject) => {
-      fs.createReadStream(mdFilePath)
-        .pipe(markdownpdf())
-        .pipe(fs.createWriteStream(pdfFilePath))
-        .on("finish", () => {
-          fs.unlinkSync(mdFilePath);
-
-          resolve(pdfFilePath);
-        })
-        .on("error", reject);
-    });
-  }
-
   saveFileInStorage(
     dataFile: ISaveFile
   ): Promise<IResultFile> {

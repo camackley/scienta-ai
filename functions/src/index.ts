@@ -10,7 +10,7 @@ admin.initializeApp();
 // Init routes
 export const analysis = functions
   .runWith({
-    timeoutSeconds: 300,
+    timeoutSeconds: 500,
     memory: "1GB",
   })
   .https.onRequest(AnalysisFn);

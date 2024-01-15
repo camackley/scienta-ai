@@ -1,6 +1,5 @@
-import * as express from "express";
 import * as formidable from "formidable";
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { error } from "firebase-functions/logger";
 
 import fileService from "../services/fileService";
