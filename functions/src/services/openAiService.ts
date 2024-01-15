@@ -17,7 +17,13 @@ class OpenAIService {
   }
 
   private initThread(): void {
-    this.threadPromise = this.openai.beta.threads.create();
+    if (functions.config().env.is_dev_mode == "true") {
+      this.threadPromise = this.openai.beta.threads.retrieve(
+        "thread_BTuDO3ZpvmgpvQSViq6Ndgr1"
+      );
+    } else {
+      this.threadPromise = this.openai.beta.threads.create();
+    }
   }
 
   private async getThread(): Promise<Thread> {
@@ -56,8 +62,13 @@ class OpenAIService {
   }
 
   async processMessage(assistantId: string): Promise<any> {
-    const runId = await this.createRun(assistantId);
-    const toolOutputs = await this.processRun(runId);
+    let toolOutputs;
+
+    if (functions.config().env.is_dev_mode == "false") {
+      const runId = await this.createRun(assistantId);
+      toolOutputs = await this.processRun(runId);
+    }
+
     const thread = await this.getThread();
     const messages = await this.openai.beta.threads.messages.list(thread.id);
 

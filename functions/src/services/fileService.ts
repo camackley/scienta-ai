@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as path from "path";
 import * as admin from "firebase-admin";
 import * as markdownpdf from "markdown-pdf";
 
@@ -9,8 +10,13 @@ class FileService {
     fileName: string,
     content: string
   ): Promise<string> {
-    const mdFilePath = `temp/${fileName}.md`;
-    const pdfFilePath = `temp/${fileName}.pdf`;
+    const mdFilePath = `src/temp/${fileName}.md`;
+    const pdfFilePath = `src/temp/${fileName}.pdf`;
+
+    const dirPath = path.dirname(mdFilePath);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
 
     fs.writeFileSync(mdFilePath, content);
 
