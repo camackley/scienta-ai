@@ -25,5 +25,6 @@ module.exports = {
     "indent": ["error", 2],
     "object-curly-spacing": ["error", "always"],
     "prefer-promise-reject-errors": "off",
+    "require-jsdoc": "off",
   },
 };
