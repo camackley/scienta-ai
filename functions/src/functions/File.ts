@@ -1,10 +1,10 @@
-import * as fs from "fs";
-
 import * as express from "express";
-import * as admin from "firebase-admin";
 import * as formidable from "formidable";
 import { Request, Response } from "express";
 import { error } from "firebase-functions/logger";
+
+import fileService from "../services/fileService";
+import { ISaveFile } from "../models/file";
 
 const app = express();
 app.use(express.json());
@@ -24,33 +24,21 @@ app.post("/upload", (req: Request, res: Response) => {
       }
     });
   })
-    .then((dataFile: any) => {
-      const bucket = admin.storage().bucket();
+    .then((dataFile: formidable.File) => {
       const fileExtension = `.${dataFile.originalFilename.split(".").pop()}`;
-      const fileName = `data/${dataFile.newFilename}${fileExtension}`;
-      const file = bucket.file(fileName);
+      const fileInfo = {
+        originalFilename: dataFile.originalFilename,
+        newFilename: dataFile.newFilename,
+        mimeType: dataFile.mimetype,
+        filePath: dataFile.filepath,
+        cloudPath: `data/${dataFile.newFilename}${fileExtension}`,
+      } as ISaveFile;
 
-      const stream = file.createWriteStream({
-        metadata: { contentType: dataFile.mimetype },
-      });
-
-      stream.on("error", () => {
-        throw new Error("Error while uploading the file");
-      });
-
-      stream.on("finish", async () => {
-        res.status(200).send({
-          remoteLocation: file.name,
-          fileExtension,
+      fileService.saveFileInStorage(fileInfo)
+        .then((data) => res.status(200).send(data))
+        .catch((err: Error) => {
+          throw err;
         });
-      });
-
-      fs.readFile(dataFile.filepath, (readErr, buffer) => {
-        if (readErr) {
-          throw new Error("Error reading the file.");
-        }
-        stream.end(buffer);
-      });
     })
     .catch((err) => {
       error(error);

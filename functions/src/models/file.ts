@@ -3,3 +3,16 @@ export interface IFile {
   type: string;
   name: string;
 }
+
+export interface IResultFile {
+  remoteLocation: string;
+  fileExtension: string;
+}
+
+export interface ISaveFile {
+  originalFilename: string;
+  newFilename: string;
+  mimeType: string;
+  filePath: string;
+  cloudPath: string;
+}
